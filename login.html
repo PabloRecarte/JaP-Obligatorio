@@ -38,13 +38,25 @@
 </head>
 
 <body class="text-center">
-  <div class="container p-5">
+  <!-- <div class="container p-5">
     <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
       <h4 class="alert-heading">¡A trabajar! :)</h4>
       <p>Esta sección corresponde a: Entrega 1 (Fecha de entrega: 16/08/2020) -> Punto 3 y 4.</p>
       <hr>
       <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
     </div>
+  </div> -->
+
+  <div class="container" style="position: relative; width:auto; top: 0;">
+    <form action="index.html">
+      <h3>Inicia sesion</h3>
+      <div>
+        <input type="text" name="user" placeholder="Usuario" class="form-control">
+        <input type="text" name="pass" placeholder="Contraseña" class="form-control">
+        <p><input type="checkbox" name="remember" class="form-check-input">Recordarme</p>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+      </div>
+    </form>
   </div>
 
   <script src="js/init.js"></script>
