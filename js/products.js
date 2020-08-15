@@ -23,7 +23,7 @@ function showProductsList(){
         </a>
         `
 
-        document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+        document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
     }
 }
 
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         if (resultObj.status === "ok")
         {
             productsArray = resultObj.data;
-            //Muestro las categorías ordenadas
+            //Muestro los productos ordenados
             showProductsList(productsArray);
         } 
     });
