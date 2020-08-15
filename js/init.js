@@ -40,8 +40,21 @@ var getJSONData = function(url){
     });
 }
 
+function debeLoguearse(){
+    console.log(window.localStorage.getItem('logueado'),window.location.href.includes("login.html"));
+  if(!window.localStorage.getItem('logueado') && !(window.location.href.includes("login.html"))){
+    window.location.href="login.html";
+  }
+  
+  else if(window.localStorage.getItem('logueado') && window.location.href.includes("login.html")){
+    alert("Usted ya está logueado");
+    window.location.href="index.html";
+  }
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+  debeLoguearse();
 });
