@@ -10,7 +10,7 @@ function validation(){
         password.focus();
         return false;
     } else {
-        window.localStorage.setItem('logueado','si');
+        window.localStorage.setItem('logueado',nombre.value);
         return true;
     }
 }

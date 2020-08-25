@@ -41,7 +41,6 @@ var getJSONData = function(url){
 }
 
 function debeLoguearse(){
-    console.log(window.localStorage.getItem('logueado'),window.location.href.includes("login.html"));
   if(!window.localStorage.getItem('logueado') && !(window.location.href.includes("login.html"))){
     window.location.href="login.html";
   }
@@ -52,9 +51,17 @@ function debeLoguearse(){
   }
 }
 
+function mostrarUsuario(){
+  if (!window.location.href.includes("login.html")){
+    var elUser = document.getElementsByClassName("usuario-carrito")[0];
+    elUser.innerHTML = ``+ window.localStorage.getItem("logueado") + ``;
+  }
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
   debeLoguearse();
+  mostrarUsuario();
 });
