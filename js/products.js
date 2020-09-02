@@ -62,20 +62,23 @@ function showProductsList(){
         let product = currentProductsArray[i];
 
         htmlContentToAppend += `
-        <a href="product-info.html" class="list-group-item list-group-item-action producto">
-            <div class="row">
-                <div class="col-3">
-                    <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
-                </div>
-                <div class="col">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h4 class="mb-1"><span class="filtro">`+ product.name + `</span> - ` + product.currency + ` ` + product.cost +`</h4>
-                        <small class="text-muted">` + product.soldCount + ` artículos</small>
+        <div class="producto">
+            <a href="product-info.html" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
                     </div>
-                    <p class="mb-1 filtro">` + product.description + `</p>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1 prodname">`+ product.name + `</h4>
+                            <small class="text-muted">` + product.soldCount + ` artículos</small>
+                        </div>
+                        <p class="mb-1 proddescription">` + product.description + `</p>
+                        <p class="mb-1">Precio: ` + product.currency + ` ` + product.cost +`</p>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
         `
 
         document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
@@ -94,29 +97,28 @@ function sortAndShowProducts(sortCriteria, productsArray){
 
     //Muestro los productos ordenados
     showProductsList();
+    filterProductsWords();
 }
 
 function filterProductsWords(){
     texto = document.getElementById("busqueda").value.toUpperCase();
     var productos = document.getElementsByClassName("producto");
-    console.log(productos);
-    var busqueda = "";
+    var busqueda;
+    var soloNombre = document.getElementById("busquedanombre").checked;
     for (let i = 0; i < productos.length; i++){
         busqueda = "";
-        var objetivos = productos[i].getElementsByClassName("filtro");
-        for (let j = 0; j < objetivos.length; j++){
-            busqueda += " " + objetivos[j].textContent.toUpperCase();
+        var nombres = productos[i].getElementsByClassName("prodname");
+        var descripciones = productos[i].getElementsByClassName("proddescription");
+        for (let j = 0; j < nombres.length; j++){
+            busqueda += " " + nombres[j].textContent.toUpperCase();
+            if(!soloNombre){
+                busqueda += " " + descripciones[j].textContent.toUpperCase();
+            }
         }
-        console.log(texto);
-        console.log(busqueda);
-        console.log(busqueda.indexOf(texto));
-        console.log(typeof productos[i]);
         if (busqueda.indexOf(texto) > -1){
             productos[i].style.display = "";
-            console.log("mostrar")
         } else {
             productos[i].style.display = "none";
-            console.log("no mostrar")
         }
     }
 }
@@ -153,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         maxCount = undefined;
 
         filterProductsPrice(minCount,maxCount,originalArray);
-        showProductsList();
+        sortAndShowProducts(currentSortCriteria,currentProductsArray);
     });
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
@@ -176,5 +178,13 @@ document.addEventListener("DOMContentLoaded", function(e){
             maxCount = undefined;
         }
         sortAndShowProducts(currentSortCriteria,filterProductsPrice(minCount,maxCount,originalArray));
+    });
+
+    document.getElementById("busquedanombre").addEventListener("click", function(){
+        filterProductsWords()
+    });
+
+    document.getElementById("busquedatodo").addEventListener("click", function(){
+        filterProductsWords()
     });
 });
