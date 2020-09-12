@@ -13,6 +13,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/personal-styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -26,12 +27,37 @@
       <a class="py-2 d-none d-md-inline-block usuario-carrito" href="#"></a>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 13/09/2020) y Entrega 4 (Fecha de entrega: 20/09/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <div id="informaciondeproducto"></div>
+  <div id="comentariosdeproducto"></div>
+  <div>
+    <div class="container">
+      <div class="row justify-content-md-center">
+          <div class="col-md-12 order-md-1">
+            <form id="formnuevocomentario">
+              <h4 class="mb-4">
+                  Comentarios
+              </h4>  
+              <div class="col-md-12 mb-3">
+                  <label for="descripcion-producto">Escribe tu opinion o consulta sobre el producto:</label>
+                  <textarea class="form-control" id="descripcion-producto" rows="3"></textarea>
+              </div>
+              <div class="col-md-12 mb-3">
+                <p>Califica este producto:
+                  <select name="valoracion" id="valoracion-producto">
+                    <option value="-1" disabled selected>Calificacion</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </p>
+              </div>
+              <button onclick="validacionNuevoComentario()" type="button" class="btn btn-primary">Enviar</button>
+            </form>
+          </div>
+      </div>
     </div>
   </div>
   <footer class="text-muted">
