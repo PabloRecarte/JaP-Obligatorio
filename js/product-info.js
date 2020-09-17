@@ -1,3 +1,4 @@
+var allProducts = [];
 var currentProduct=[];
 var currentComments = [];
 
@@ -177,28 +178,71 @@ function validacionNuevoComentario(){
             form.reset();
         }
     }
-    return false;
+    return false;    
+}
 
+function showCadaAsociado(){
+    let res = "";
+    let nroProd;
+    for(let i = 0; i < currentProduct.relatedProducts.length; i++){
+        nroProd = currentProduct.relatedProducts[i];
+        res += `
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-3">
+                    <img src="` + allProducts[nroProd].imgSrc + `" alt="imagenProducto" />
+                </div>
+                <div class="col">
+                    <h6 class="mb-3"><span class="usercomment">` + allProducts[nroProd].name + `</span> - ` + allProducts[nroProd].currency + ` ` + allProducts[nroProd].cost + `</h6>
+                    <p>` + allProducts[nroProd].description + `</p>
+                </div>
+            </div>
+        </div>
+        `
+    }
+    return res;    
+}
 
-    
+function showAsociados(){
+    let htmlContentToAppend = `
+    <div class="container">
+        <hr class="mb-4">
+        <div class="row">
+            <div id="comentarios" class="col-md-12 order-md-1">
+                <h4 class="mb-4">
+                    Productos asociados
+                </h4>
+                ` + showCadaAsociado() + `
+            </div>
+        </div>
+    </div>
+    `
+    document.getElementById("productosrelacionados").innerHTML = htmlContentToAppend;
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+        
     getJSONData(PRODUCT_INFO_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
             currentProduct = resultObj.data;
             showProductInfo();
+            
+            getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
+                if (resultObj.status === "ok"){
+                    currentComments = resultObj.data;
+                    showComentarios();
+
+                    getJSONData(PRODUCTS_URL).then(function(resultObj){
+                        if (resultObj.status === "ok"){
+                            allProducts = resultObj.data;
+                            showAsociados();
+                        }
+                    });
+                }
+            });
         }
     });
-
-    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            currentComments = resultObj.data;
-            showComentarios();
-        }
-    });
-
 });
