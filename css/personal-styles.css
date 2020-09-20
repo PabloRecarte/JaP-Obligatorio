@@ -2,7 +2,7 @@
 
 img{
     border:none;
-    height: 100px;
+    /* height: 150px; */
 }
 ul,li{
 	margin:0;
@@ -28,7 +28,6 @@ li{
   .usercomment{
     font-weight: bold;
   }
-  
     /*  */
 
 	
