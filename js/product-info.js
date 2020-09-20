@@ -3,23 +3,10 @@ var currentProduct=[];
 var currentComments = [];
 
 function showImages(array){
-    let toAppend = ``;
-    for (let i = 0; i < array.length; i++){
-        toAppend +=`
-        <div class="clipped-border">
-            <img src="` + array[i] + `" id="clipped">
-        </div>
-        
-        `
-    }
-    return toAppend;
-}
-
-function showImages2(array){
     let toAppend2 = ``;
     for (let i = 0; i < array.length; i++){
         toAppend2 += `
-        <li><img src="` + array[i] + `" alt="imagen` + i + `" /></li>`
+        <img src="` + array[i] + `" alt="imagen` + i + `" />`
     }
     return toAppend2;
 }
@@ -66,16 +53,9 @@ let htmlContentToAppend = "";
                 <div class="row">
                     <div class="col-md-12">
                         <h5>Imágenes ilustrativas:</h5>
-                        <ul>
-                        ` + showImages2(product.images) + `
-                        </ul>
+                        ` + showImages(product.images) + `
                     </div>
                 </div>
-
-                <!-- <div class = "row gallery">
-                ` + showImages(product.images) + `
-                    <div class = "shadow"></div>
-                </div> -->
             </div>
         </div>
     </div>
