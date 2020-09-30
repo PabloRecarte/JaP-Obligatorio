@@ -54,8 +54,13 @@ function debeLoguearse(){
 function mostrarUsuario(){
   if (!window.location.href.includes("login.html")){
     var elUser = document.getElementsByClassName("usuario-carrito")[0];
-    elUser.innerHTML = ``+ window.localStorage.getItem("logueado") + ``;
+    elUser.innerHTML = ``+ window.localStorage.getItem("logueado") + ` `;
   }
+}
+
+function cerrarSesion(){
+  localStorage.removeItem('logueado');
+  window.location.href="index.html";
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -64,4 +69,10 @@ function mostrarUsuario(){
 document.addEventListener("DOMContentLoaded", function(e){
   debeLoguearse();
   mostrarUsuario();
+
+  if (!window.location.href.includes("login.html")){
+    document.getElementsByClassName("logout")[0].addEventListener("click", function(e){
+      cerrarSesion();
+    });   
+  }
 });

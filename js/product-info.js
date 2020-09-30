@@ -1,26 +1,22 @@
+var allProducts = [];
 var currentProduct=[];
 var currentComments = [];
 
 function showImages(array){
     let toAppend = ``;
-    for (let i = 0; i < array.length; i++){
-        toAppend +=`
-        <div class="clipped-border">
-            <img src="` + array[i] + `" id="clipped">
-        </div>
-        
-        `
+    if (0 < array.length){
+        toAppend += `
+        <div class="carousel-item active" data-interval="4000">
+            <img src="` + array[0] + `" class="d-block w-100" alt="imagen` + 0 + `">
+        </div>`        
+    }
+    for (let i = 1; i < array.length; i++){
+        toAppend += `
+        <div class="carousel-item" data-interval="4000">
+            <img src="` + array[i] + `" class="d-block w-100" alt="imagen` + i + `">
+        </div>`
     }
     return toAppend;
-}
-
-function showImages2(array){
-    let toAppend2 = ``;
-    for (let i = 0; i < array.length; i++){
-        toAppend2 += `
-        <li><img src="` + array[i] + `" alt="imagen` + i + `" /></li>`
-    }
-    return toAppend2;
 }
 
 function showProductInfo(){
@@ -49,32 +45,64 @@ let htmlContentToAppend = "";
                         <h5>Decripción</h5>
                         <p>`+ product.description +`</p>
                     </div>
-                </div>
+                </div>      
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <h5>Categoría</h5>
-                        <a href="category-info.html">Autos</a>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5>Categoría</h5>
+                                <a href="category-info.html">Autos</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5>Cantidad de vendidos</h5>
+                                <p>`+ product.soldCount +`</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="width: 50%">
+                                    <div id="carouselExampleFade" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                    ` + showImages(product.images) + `
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <h5>Cantidad de vendidos</h5>
-                        <p>`+ product.soldCount +`</p>
-                    </div>
-                </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-12">
                         <h5>Imágenes ilustrativas:</h5>
-                        <ul>
-                        ` + showImages2(product.images) + `
-                        </ul>
+                        <div style="width: 50%">
+                            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+                                <div class="carousel-inner">
+                            ` + showImages(product.images) + `
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- <div class = "row gallery">
-                ` + showImages(product.images) + `
-                    <div class = "shadow"></div>
-                </div> -->
+                </div>-->
             </div>
         </div>
     </div>
@@ -177,28 +205,71 @@ function validacionNuevoComentario(){
             form.reset();
         }
     }
-    return false;
+    return false;    
+}
 
+function showCadaAsociado(){
+    let res = "";
+    let nroProd;
+    for(let i = 0; i < currentProduct.relatedProducts.length; i++){
+        nroProd = currentProduct.relatedProducts[i];
+        res += `
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-3">
+                    <img height="150px" src="` + allProducts[nroProd].imgSrc + `" alt="imagenProducto" />
+                </div>
+                <div class="col">
+                    <h6 class="mb-3"><span class="usercomment">` + allProducts[nroProd].name + `</span> - ` + allProducts[nroProd].currency + ` ` + allProducts[nroProd].cost + `</h6>
+                    <p>` + allProducts[nroProd].description + `</p>
+                </div>
+            </div>
+        </div>
+        `
+    }
+    return res;    
+}
 
-    
+function showAsociados(){
+    let htmlContentToAppend = `
+    <div class="container">
+        <hr class="mb-4">
+        <div class="row">
+            <div id="comentarios" class="col-md-12 order-md-1">
+                <h4 class="mb-4">
+                    Productos asociados
+                </h4>
+                ` + showCadaAsociado() + `
+            </div>
+        </div>
+    </div>
+    `
+    document.getElementById("productosrelacionados").innerHTML = htmlContentToAppend;
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+        
     getJSONData(PRODUCT_INFO_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
             currentProduct = resultObj.data;
             showProductInfo();
+            
+            getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
+                if (resultObj.status === "ok"){
+                    currentComments = resultObj.data;
+                    showComentarios();
+
+                    getJSONData(PRODUCTS_URL).then(function(resultObj){
+                        if (resultObj.status === "ok"){
+                            allProducts = resultObj.data;
+                            showAsociados();
+                        }
+                    });
+                }
+            });
         }
     });
-
-    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            currentComments = resultObj.data;
-            showComentarios();
-        }
-    });
-
 });
