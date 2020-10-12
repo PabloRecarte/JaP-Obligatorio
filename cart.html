@@ -11,23 +11,10 @@
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/cart.css">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
@@ -51,14 +38,150 @@
       </div>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega: 25/10/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <main role="main" class="pb-5">
+    <div class="text-center p-4">
+        <h2>Mi Carrito</h2>
     </div>
-  </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-9">
+          <div class="list-group" id="cart-list-container"></div>
+          <div class="col-6" id="cart-container"></div>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            <div id="cart-dataenvio-container"></div>
+          </div>
+          <div class="row">
+            <div id="cart-datapago-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalTiposEnvio">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tipos de envío</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <h5 class="text-warning">Premium (15%)</h5>
+                    <p class="muted text-justify">Al contratar envío Premium, te aseguras recibir tus productos, ¡en los siguientes 4 días!</p>
+                </div>
+                <hr>
+                <div class="row">
+                    <h5 class="text-primary">Express (7%)</h5>
+                    <p class="muted text-justify">Adquiriendo la modalidad de envío Express, recibirás tu pedido entre 5 y 8 días luego de realizar la compra.</p>
+                </div>
+                <hr>
+                <div class="row">
+                    <h5 class="text-secondary">Standard (5%)</h5>
+                    <p class="muted text-justify">Con el envío Standar, recibirás tu compra entre 12 y 15 días luego de efectuada..</p>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalTarjeta">
+      <div style="max-width: 800px;" class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nueva tarjeta</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <form onsubmit="return agregarTarjeta()" id="formNuevaTarjeta">
+                <div class="row">
+                  <div class="col-50">
+                    <h3>Datos</h3>
+                    <div class="row">
+                      <div class="col-50">
+                        <p><i class="fa fa-user"></i> Titular
+                          <input type="text" id="fname" name="firstname" required placeholder="Juan Perez"></p>
+                      </div>
+                      <div class="col-50">
+                        <p><label for="temail"><i class="fa fa-envelope"></i> Email</label>
+                          <input type="text" id="temail" name="temail" placeholder="jperez@example.com"></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-50">
+                        <p><label for="cardnumber"><i class="far fa-credit-card"></i> Número de tarjeta</label>
+                          <input type="text" id="cardnumber" name="cardnumber" required placeholder="1111-2222-3333-4444"></p>
+                      </div>
+                      <div class="col-50">
+                        <p><label for="cvv">CVV</label>
+                          <input type="password" id="cvv" required name="cvv" placeholder="111"></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-50">
+                        <p><label for="mesExp">Expiración: Mes</label>
+                          <select required name="mesExp" id="mesExp">
+                            <option disabled selected value="">--</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                          </select></p>
+                      </div>
+                      <div class="col-50">
+                        <p><label for="anioExp">Año</label>
+                          <select required name="anioExp" id="anioExp">
+                            <option disabled selected value="">--</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                          </select></p>
+                      </div>
+                    </div>        
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Agregar tarjeta</button>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
