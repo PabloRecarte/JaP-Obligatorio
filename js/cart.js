@@ -22,7 +22,7 @@ function showCartElementsList(){
                             <p class="mb-1">Precio unitario:  <span class="moneda">` + element.currency + `</span> <span class="precio">` + element.unitCost +`</span></p>
                             <!-- <p class="mb-1">Unidades:  ` + element.count + `</p> -->
                             <div class="remover-producto">
-                                <button class="btn btn-danger boton-remover" type="button" style="float: right; vertical-align: text-bottom;">Quitar</button>
+                                <button class="` + element.name + ` btn btn-danger boton-remover" type="button" style="float: right; vertical-align: text-bottom;">Quitar</button>
                             </div>
                             </div>
                         </div>
@@ -35,17 +35,6 @@ function showCartElementsList(){
         `
     }
     document.getElementById("cart-list-container").innerHTML = htmlContentToAppend;
-}
-
-// remover cantidades
-function removerItem(boton)
-{
-  /* Remove row from DOM and recalc cart total */
-  var producto = $(boton).parent().parent().parent().parent().parent().parent().parent();
-  producto.slideUp(fadeTime, function() {
-    producto.remove();
-    actualizarSubtotales();
-  });
 }
 
 function showCartResume(){
@@ -213,9 +202,24 @@ function agregarEventosCantidades(){
     cambiaEnvio.addEventListener("input", function(e){
         actualizarSubtotales();
     });
-    $('.remover-producto button').click( function() {
-        removerItem(this);
-    });
+}
+
+function agregarEventosBotones(){
+    let botonesRemover = document.getElementsByClassName("boton-remover")
+    let boton;
+    for(let i = 0; i < botonesRemover.length; i++){
+        boton = botonesRemover[i];
+        boton.addEventListener("click", function(e){
+            removerItem(this);
+        })
+    }
+}
+
+// remover cantidades
+function removerItem(boton){
+    var producto = boton.closest(".producto");
+    producto.remove();
+    actualizarSubtotales();
 }
 
 function enableCardOrNot(){
@@ -338,6 +342,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             actualizarSubtotales();
         }
         agregarEventosCantidades();
+        agregarEventosBotones();
         enableCardOrNot();
 
         document.getElementById("tarjeta").addEventListener("click", function(){
