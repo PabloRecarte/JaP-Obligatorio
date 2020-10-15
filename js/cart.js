@@ -1,6 +1,7 @@
 
 var currentCart = {};
 var currentCartElements = [];
+var fadeTime = 300;
 
 function showCartElementsList(){
     let htmlContentToAppend = "";
@@ -20,6 +21,9 @@ function showCartElementsList(){
                             <div>
                             <p class="mb-1">Precio unitario:  <span class="moneda">` + element.currency + `</span> <span class="precio">` + element.unitCost +`</span></p>
                             <!-- <p class="mb-1">Unidades:  ` + element.count + `</p> -->
+                            <div class="remover-producto">
+                                <button class="btn btn-danger boton-remover" type="button" style="float: right; vertical-align: text-bottom;">Quitar</button>
+                            </div>
                             </div>
                         </div>
                         <p>Cantidad: <input class="cantidad" type="number" min="0" value=`+ element.count +`></p>
@@ -31,6 +35,17 @@ function showCartElementsList(){
         `
     }
     document.getElementById("cart-list-container").innerHTML = htmlContentToAppend;
+}
+
+// remover cantidades
+function removerItem(boton)
+{
+  /* Remove row from DOM and recalc cart total */
+  var producto = $(boton).parent().parent().parent().parent().parent().parent().parent();
+  producto.slideUp(fadeTime, function() {
+    producto.remove();
+    actualizarSubtotales();
+  });
 }
 
 function showCartResume(){
@@ -197,6 +212,9 @@ function agregarEventosCantidades(){
     let cambiaEnvio = document.getElementById("metodoEnvio");
     cambiaEnvio.addEventListener("input", function(e){
         actualizarSubtotales();
+    });
+    $('.remover-producto button').click( function() {
+        removerItem(this);
     });
 }
 
