@@ -37,108 +37,7 @@ function showCartElementsList(){
     document.getElementById("cart-list-container").innerHTML = htmlContentToAppend;
 }
 
-function showCartResume(){
-    let htmlContentToAppend = "";
-
-    htmlContentToAppend = `
-    <div>
-        <div class="list-group-item list-group-item-action">
-            <h4 class="mb-1">Resumen</h4><div>
-            <table class="table table-borderless table-sm">
-                <tbody>
-                    <tr>
-                        <th scope="row">Unidades:</th>
-                        <td><span id="totalUnidades"></span> unidades</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Subtotal:</th>
-                        <td>UYU <span id="subtotal"></span></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Costo envío:</th>
-                        <td>UYU <span id="costoEnvio"></span></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Total:</th>
-                        <td>UYU <span id="total"></span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <form onsubmit="return comprarValidacion()">
-                <button type="submit" class="btn btn-primary">Comprar</button>
-            </form>
-        </div>
-    </div>
-    `
-    document.getElementById("cart-container").innerHTML = htmlContentToAppend;
-}
-
-function showDataEnvio(){
-    let htmlContentToAppend = "";
-
-    htmlContentToAppend = `
-    <div>
-        <div class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col">
-                    <h4 class="mb-1">Envío</h4><div>
-                    <input id="calle" type="text" class="form-control" placeholder="Calle" value="">
-                    <div class="row">
-                        <div class="col">
-                            <input id="numeropuerta" type="number" class="form-control" placeholder="Nº" value="">
-                        </div>
-                        <div class="col">
-                            <input id="esquina" type="text" class="form-control" placeholder="Esquina" value="">
-                        </div>
-                    </div>
-                    <input id="pais" type="text" class="form-control" placeholder="País" value="">
-                    <select class="custom-select d-block w-100" id="metodoEnvio">
-                        <option disabled selected value="0">Tipo de envío</option>
-                        <option value="15">Premium</option>
-                        <option value="7">Express</option>
-                        <option value="5">Standard</option>
-                    </select>
-                    <button type="button" class="m-1 btn btn-link" data-toggle="modal" data-target="#modalTiposEnvio">Ver tipos de envío</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    `
-    document.getElementById("cart-dataenvio-container").innerHTML = htmlContentToAppend;
-}
-
-function showDataPago(){
-    let htmlContentToAppend = "";
-
-    htmlContentToAppend = `
-    <div>
-        <div class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col">
-                    <h4 class="mb-1">Pago</h4><div>
-                    <div class="d-block my-3">
-                        <div class="custom-control custom-radio">
-                            <input id="tarjeta" name="publicationType" type="radio" class="custom-control-input" checked="" required="">
-                            <label class="custom-control-label" for="tarjeta">Tarjeta de crédito</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input id="transferencia" name="publicationType" type="radio" class="custom-control-input" required="">
-                            <label class="custom-control-label" for="transferencia">Transferencia bancaria</label>
-                        </div>
-                    </div>
-                    <select class="custom-select d-block w-100" id="selectorTarjeta">
-                        <option disabled selected value="">Seleccionar tarjeta</option>
-                    </select>
-                    <button type="button" class="m-1 btn btn-link" data-toggle="modal" data-target="#modalTarjeta">Agregar tarjeta</button>
-                    <input id="cuentaTransferencia" type="text" class="form-control" placeholder="Nº de cuenta" value="">
-                </div>
-            </div>
-        </div>
-    </div>
-    `
-    document.getElementById("cart-datapago-container").innerHTML = htmlContentToAppend;
-}
-
+// actualiza los campos de subtotales por producto, usd->uyu, unidades, subtotal, costoenvio, total
 function actualizarSubtotales(){
     // variables globales
     let productos = document.getElementsByClassName("producto");
@@ -191,6 +90,7 @@ function actualizarSubtotales(){
     }
 }
 
+// agrega eventos para actualizar en variaciones de cantidad y costo de envio
 function agregarEventosCantidades(){
     let todasLasCantidades = document.getElementsByClassName("cantidad");
     for(let i = 0; i < todasLasCantidades.length; i++){
@@ -204,6 +104,7 @@ function agregarEventosCantidades(){
     });
 }
 
+// agrega eventos para quitar productos y actualizar al hacerlo
 function agregarEventosBotones(){
     let botonesRemover = document.getElementsByClassName("boton-remover")
     let boton;
@@ -222,8 +123,9 @@ function removerItem(boton){
     actualizarSubtotales();
 }
 
+// (des)habilita tarjeta/cuenta segun radio seleccionado
 function enableCardOrNot(){
-    let transferenciaELEM = document.getElementById("cuentaTransferencia");
+    let transferenciaELEM = document.getElementById("selectorDatosCuenta");
     let sel = document.getElementById("selectorTarjeta");
     let tarjetaELEM = document.getElementById("tarjeta");
     let esTarjeta = tarjetaELEM.checked;
@@ -236,6 +138,7 @@ function enableCardOrNot(){
     }
 }
 
+// chequea que form tarjeta este completo y no vencida, se agrega si todo OK
 function agregarTarjeta(){
     // se chequea el vencimiento
 
@@ -271,6 +174,7 @@ function agregarTarjeta(){
     return false;
 }
 
+// chequea que form de envio este completo
 function chequearDatosEnvio(){
     // chequeo de calle, nropuerta, esquina
     let calle = document.getElementById("calle").value;
@@ -299,24 +203,26 @@ function chequearDatosEnvio(){
     return true;
 }
 
+// chequea compra no vacia, form envio lleno, (tarjeta seleccionada) y confirmacion
 function comprarValidacion(){
     let esTarjeta = document.getElementById("tarjeta").checked;
     let tarjeta = document.getElementById("selectorTarjeta").value;
-    let nroCuenta = document.getElementById("cuentaTransferencia").value;
+    let unidades = document.getElementById("totalUnidades").textContent;
+
+    if(unidades == 0){
+        alert("No hay productos seleccionados para la compra");
+        return false;
+    }
 
     if(!chequearDatosEnvio()){
         return false;
     }
-
-
+    
     if(esTarjeta){
         if(tarjeta == ""){
             alert("Seleccione una tarjeta, añadiéndola de ser necesario.");
             return false;
         }
-    } else if(nroCuenta == ""){
-            alert("Ingrese un número de cuenta.");
-            return false;
     } else {
         if(!confirm("¿Desea confirmar la compra?")){
             return false;
@@ -336,11 +242,9 @@ document.addEventListener("DOMContentLoaded", function(e){
             currentCart = resultObj.data
             currentCartElements = currentCart["articles"];
             showCartElementsList();
-            showCartResume();
-            showDataEnvio();
-            showDataPago();
             actualizarSubtotales();
         }
+        // agrego eventos
         agregarEventosCantidades();
         agregarEventosBotones();
         enableCardOrNot();

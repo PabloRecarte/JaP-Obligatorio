@@ -2,6 +2,7 @@ var allProducts = [];
 var currentProduct=[];
 var currentComments = [];
 
+// carga las imagenes en el carrousel
 function showImages(array){
     let toAppend = ``;
     if (0 < array.length){
@@ -19,6 +20,7 @@ function showImages(array){
     return toAppend;
 }
 
+// mmuestra la informacion del producto
 function showProductInfo(){
 
 let htmlContentToAppend = "";
@@ -111,6 +113,7 @@ let htmlContentToAppend = "";
     document.getElementById("informaciondeproducto").innerHTML = htmlContentToAppend;
 }
 
+// muestra la puntuacion
 function showPuntuacion(num){
     let res = "";
     for (let i = 1; i <= num; i++){
@@ -124,6 +127,7 @@ function showPuntuacion(num){
     return res;
 }
 
+// despliega cada comentario
 function showCadaComentario(){
     let res = "";
     for(let i = 0; i < currentComments.length; i++){
@@ -137,6 +141,7 @@ function showCadaComentario(){
     return res;
 }
 
+// muestra el conjunto de comentarios
 function showComentarios(){
     let htmlContentToAppend = `
     <div class="container">
@@ -155,6 +160,7 @@ function showComentarios(){
     document.getElementById("comentariosdeproducto").innerHTML = htmlContentToAppend;
 }
 
+// formato fecha y hora
 function adecuacionFechaHora(num){
     res = "";
     if (num < 10){
@@ -164,6 +170,7 @@ function adecuacionFechaHora(num){
     return res;
 }
 
+// chequea calificacion, agrega comentario
 function validacionNuevoComentario(){
     var form = document.getElementById("formnuevocomentario");
     var contenido = document.getElementById("descripcion-producto").value;
@@ -208,6 +215,7 @@ function validacionNuevoComentario(){
     return false;    
 }
 
+// despliega cada asociado
 function showCadaAsociado(){
     let res = "";
     let nroProd;
@@ -230,6 +238,7 @@ function showCadaAsociado(){
     return res;    
 }
 
+// muestra asociados
 function showAsociados(){
     let htmlContentToAppend = `
     <div class="container">

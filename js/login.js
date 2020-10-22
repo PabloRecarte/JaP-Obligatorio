@@ -1,3 +1,4 @@
+// chequea no vacio usuario y pass, guarda en localStorage
 function validation(){
     var nombre = document.getElementById("name");
     var password = document.getElementById("pass");
@@ -15,6 +16,7 @@ function validation(){
     }
 }
 
+// muestra y oculta password
 function showPassword(){
     var check = document.getElementById("showpass");
     var pass = document.getElementById("pass");
