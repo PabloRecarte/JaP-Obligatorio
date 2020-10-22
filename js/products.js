@@ -9,6 +9,7 @@ const ORDER_ASC_BY_PRICE = "09";
 const ORDER_DESC_BY_PRICE = "90";
 const ORDER_BY_SOLD_COUNT = "Cant. ";
 
+// ordena segun costo y cantidad
 function sortProducts(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_PRICE)
@@ -38,6 +39,7 @@ function sortProducts(criteria, array){
     return result;
 }
 
+// filtra segun costo
 function filterProductsPrice(min,max,array){
     if (min == undefined && max == undefined){
         currentProductsArray = array;
@@ -55,6 +57,7 @@ function filterProductsPrice(min,max,array){
     }
 }
 
+// muestra los productos
 function showProductsList(){
 
     let htmlContentToAppend = "";
@@ -85,6 +88,7 @@ function showProductsList(){
     }
 }
 
+// indica que moestrar e invoca la funcion que muestra
 function sortAndShowProducts(sortCriteria, productsArray){
     currentSortCriteria = sortCriteria;
 
@@ -100,6 +104,7 @@ function sortAndShowProducts(sortCriteria, productsArray){
     filterProductsWords();
 }
 
+// filtrado de searchbox
 function filterProductsWords(){
     texto = document.getElementById("busqueda").value.toUpperCase();
     var productos = document.getElementsByClassName("producto");
@@ -135,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
     });
 
+    // eventos para ordenar
     document.getElementById("sortAsc").addEventListener("click", function(){
         sortAndShowProducts(ORDER_ASC_BY_PRICE);
     });
@@ -147,6 +153,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         sortAndShowProducts(ORDER_BY_SOLD_COUNT);
     });
 
+    // eventos para borrar filtro
     document.getElementById("clearRangeFilter").addEventListener("click", function(){
         document.getElementById("rangeFilterCountMin").value = "";
         document.getElementById("rangeFilterCountMax").value = "";
@@ -158,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         sortAndShowProducts(currentSortCriteria,currentProductsArray);
     });
 
+    // eventos para filtrar
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
         //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
         //de unidades vendidas por artículo.
@@ -180,6 +188,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         sortAndShowProducts(currentSortCriteria,filterProductsPrice(minCount,maxCount,originalArray));
     });
 
+    // eventos para searchbox
     document.getElementById("busquedanombre").addEventListener("click", function(){
         filterProductsWords()
     });

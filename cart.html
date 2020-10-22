@@ -46,14 +46,99 @@
       <div class="row">
         <div class="col-9">
           <div class="list-group" id="cart-list-container"></div>
-          <div class="col-6" id="cart-container"></div>
+          <div class="col-6" id="cart-container">
+            <div>
+              <div class="list-group-item list-group-item-action">
+                <h4 class="mb-1">Resumen</h4>
+                <table class="table table-borderless table-sm">
+                  <tbody>
+                    <tr>
+                      <th scope="row">Unidades:</th>
+                      <td><span id="totalUnidades"></span> unidades</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Subtotal:</th>
+                      <td>UYU <span id="subtotal"></span></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Costo envío:</th>
+                      <td>UYU <span id="costoEnvio"></span></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Total:</th>
+                      <td>UYU <span id="total"></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <form onsubmit="return comprarValidacion()">
+                  <button type="submit" class="btn btn-primary">Comprar</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-3">
           <div class="row">
-            <div id="cart-dataenvio-container"></div>
+            <div id="cart-dataenvio-container">
+              <div>
+                <div class="list-group-item list-group-item-action">
+                  <div class="row">
+                    <div class="col">
+                      <h4 class="mb-1">Envío</h4>
+                      <input id="calle" type="text" class="form-control" placeholder="Calle" value="">
+                      <div class="row">
+                        <div class="col">
+                          <input id="numeropuerta" type="number" class="form-control" placeholder="Nº" value="">
+                        </div>
+                        <div class="col">
+                          <input id="esquina" type="text" class="form-control" placeholder="Esquina" value="">
+                        </div>
+                      </div>
+                      <input id="pais" type="text" class="form-control" placeholder="País" value="">
+                      <select class="custom-select d-block w-100" id="metodoEnvio">
+                        <option disabled selected value="0">Tipo de envío</option>
+                        <option value="15">Premium</option>
+                        <option value="7">Express</option>
+                        <option value="5">Standard</option>
+                      </select>
+                      <button type="button" class="m-1 btn btn-link" data-toggle="modal" data-target="#modalTiposEnvio">Ver tipos de envío</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="row">
-            <div id="cart-datapago-container"></div>
+            <div id="cart-datapago-container">
+              <div>
+                <div class="list-group-item list-group-item-action">
+                  <div class="row">
+                    <div class="col">
+                      <h4 class="mb-1">Pago</h4>
+                      <div class="d-block my-3">
+                        <div class="custom-control custom-radio">
+                          <input id="tarjeta" name="publicationType" type="radio" class="custom-control-input" checked="" required="">
+                          <label class="custom-control-label" for="tarjeta">Tarjeta de crédito</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input id="transferencia" name="publicationType" type="radio" class="custom-control-input" required="">
+                          <label class="custom-control-label" for="transferencia">Transferencia bancaria</label>
+                        </div>
+                      </div>
+                      <select class="custom-select d-block w-100" id="selectorTarjeta">
+                        <option disabled selected value="">Seleccionar tarjeta</option>
+                      </select>
+                      <button type="button" class="m-1 btn btn-link" data-toggle="modal" data-target="#modalTarjeta">Agregar tarjeta</button>
+                      <select class="custom-select d-block w-100" id="selectorDatosCuenta">
+                      <option disabled selected value="">Datos cuenta bancaria</option>
+                        <option disabled value="">Nombre: eMercado JAP 2020</option>
+                        <option disabled value="">Número: 1111-2222-3333-4444</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
