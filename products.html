@@ -12,6 +12,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="css/personal-styles-2.css"> -->
   </head>
   <body>
     <nav class="site-header sticky-top py-1 bg-dark">
@@ -36,69 +37,69 @@
           <h2>Productos</h2>
           <p class="lead">Aquí puede consultar los productos de la categoría seleccionada.</p>
       </div>
-      <div class="container">
-          <div class="row">
-              <div class="col text-right">
-                  <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-                    <label class="btn btn-light active" id="sortAsc" >
-                        <input type="radio" name="options" autocomplete="off" checked>0-9
-                    </label>
-                    <label class="btn btn-light" id="sortDesc" >
-                        <input type="radio" name="options" autocomplete="off">9-0
-                    </label>
-                    <label class="btn btn-light" id="sortByCount" >
-                        <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
-                    </label>
+      <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col text-right">
+                    <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+                      <label class="btn btn-light active" id="sortAsc" >
+                          <input type="radio" name="options" autocomplete="off" checked>0-9
+                      </label>
+                      <label class="btn btn-light" id="sortDesc" >
+                          <input type="radio" name="options" autocomplete="off">9-0
+                      </label>
+                      <label class="btn btn-light" id="sortByCount" >
+                          <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
+                      </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+              <div class="col-md-6"></div>
+                <div class="col-md-6 col-sm-12 mb-1 container">
+                    <div class="row container p-0 m-0">
+                    <h6 class="mb-3">Buscar según:</h6>
+                    <div class="col">
+                      <div class="col custom-control custom-radio">
+                        <input id="busquedanombre" name="busqueda" type="radio" class="custom-control-input" checked="" required>
+                        <label class="custom-control-label" for="busquedanombre">Nombre</label>
+                      </div>
+                      <div class="col custom-control custom-radio">
+                        <input id="busquedatodo" name="busqueda" type="radio" class="custom-control-input" required>
+                        <label class="custom-control-label" for="busquedatodo">Todo</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="btn-group" role="group">
+                        <div><input class="form-control" onsearch="filterProductsWords()" onkeyup="filterProductsWords()" type="search" placeholder="Buscar" id="busqueda"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
                   </div>
-              </div>
-          </div>
-          <div class="row justify-content-end">
-            <div class="col-md-6"></div>
-              <div class="col-md-6 col-sm-12 mb-1 container">
                   <div class="row container p-0 m-0">
-                  <h6 class="mb-3">Buscar según:</h6>
-                  <div class="col">
-                    <div class="col custom-control custom-radio">
-                      <input id="busquedanombre" name="busqueda" type="radio" class="custom-control-input" checked="" required>
-                      <label class="custom-control-label" for="busquedanombre">Nombre</label>
+                    <div class="col">
+                      <p class="font-weight-normal text-right my-2">Precio</p>
                     </div>
-                    <div class="col custom-control custom-radio">
-                      <input id="busquedatodo" name="busqueda" type="radio" class="custom-control-input" required>
-                      <label class="custom-control-label" for="busquedatodo">Todo</label>
+                    <div class="col">
+                      <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
                     </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="btn-group" role="group">
-                      <div><input class="form-control" onsearch="filterProductsWords()" onkeyup="filterProductsWords()" type="search" placeholder="Buscar" id="busqueda"></div>
+                    <div class="col">
+                      <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
                     </div>
-                  </div>
-                  <div class="col-md-3">
-                  </div>
-                </div>
-                <div class="row container p-0 m-0">
-                  <div class="col">
-                    <p class="font-weight-normal text-right my-2">Precio</p>
-                  </div>
-                  <div class="col">
-                    <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
-                  </div>
-                  <div class="col">
-                    <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
-                  </div>
-                  <div class="col-3 p-0">
-                    <div class="btn-group" role="group">
-                      <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                      <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
+                    <div class="col-3 p-0">
+                      <div class="btn-group" role="group">
+                        <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
+                        <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
+                      </div>
                     </div>
                   </div>
                 </div>
+            </div>
+              <div class="row" id="prod-list-container">
               </div>
-          </div>
-          <div class="row">
-              <div class="list-group" id="prod-list-container">
-              </div>
-          </div>
         </div>
+      </div>
     </main>
     <footer class="text-muted bg-light">
       <div class="container">

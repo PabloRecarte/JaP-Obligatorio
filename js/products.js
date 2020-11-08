@@ -65,20 +65,14 @@ function showProductsList(){
         let product = currentProductsArray[i];
 
         htmlContentToAppend += `
-        <div class="producto">
-            <a href="product-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1 prodname">`+ product.name + `</h4>
-                            <small class="text-muted">` + product.soldCount + ` artículos</small>
-                        </div>
-                        <p class="mb-1 proddescription">` + product.description + `</p>
-                        <p class="mb-1">Precio: ` + product.currency + ` ` + product.cost +`</p>
-                    </div>
+        <div class="col-md-4 producto">
+            <a href="product-info.html" class="card mb-4 shadow-sm custom-card">
+                <img class="bd-placeholder-img card-img-top" src="` + product.imgSrc + `" alt="` + product.description + `">
+                <h3 class="m-3 prodname">`+ product.name + `</h3>
+                <div class="card-body">
+                    <small class="text-muted">` + product.soldCount + ` artículos</small>
+                    <p class="mb-1 proddescription">` + product.description + `</p>
+                    <p class="mb-1">Precio: ` + product.currency + ` ` + product.cost +`</p>
                 </div>
             </a>
         </div>
